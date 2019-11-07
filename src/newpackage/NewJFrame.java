@@ -6,8 +6,11 @@
 package newpackage;
 
 import java.awt.Cursor;
+import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 
 
 
@@ -18,7 +21,7 @@ import javax.swing.JOptionPane;
 public class NewJFrame extends javax.swing.JFrame {
 
     HashMap<String, String> userInfo =  new HashMap<>();
-    
+    //HashMap<String, HashMap<String, String>> userInfo =  new HashMap<>();
     public NewJFrame() {
         initComponents();
     }
@@ -214,11 +217,6 @@ public class NewJFrame extends javax.swing.JFrame {
 
         userList.setBackground(new java.awt.Color(204, 255, 204));
         userList.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        userList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "1", "2", "3", "4", "5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         userList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         userList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(userList);
@@ -516,6 +514,14 @@ public class NewJFrame extends javax.swing.JFrame {
             userInfo.put("contactNo", CNTF.getText().trim());
             userInfo.put("address", ADTF.getText().trim());
             
+            ArrayList<String> idList = new ArrayList<String>();
+            idList.add(userInfo.get("ID"));
+            DefaultListModel listModel = new DefaultListModel();
+            for(byte i = 0; i < idList.size(); i++){
+                listModel.addElement(idList.get(i));
+            }
+            userList.setModel(listModel);
+           
             JOptionPane.showMessageDialog(rootPane, "Information has been Saved", "Information Saved", JOptionPane.INFORMATION_MESSAGE);
             }
     }//GEN-LAST:event_btnAddUsrActionPerformed
@@ -536,22 +542,14 @@ public class NewJFrame extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NewJFrame().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new NewJFrame().setVisible(true);
         });
     }
 
